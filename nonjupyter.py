@@ -349,7 +349,4 @@ for loss in Loss:
 
 
 # metric.to_csv('SEIR_metric.csv')
-<<<<<<< HEAD
 '''
-=======
->>>>>>> 56d44cd9023bc418da73a83779f9bb42b007b956
