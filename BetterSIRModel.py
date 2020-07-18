@@ -49,13 +49,4 @@ class SIRModel:
             ax.spines[spine].set_visible(False)
         plt.show()
 
-def main():
 
-    # A grid of time points (in days):
-    t = np.linspace(0, 160, 160)
-    model = SIRModel(1000,1,0,t)
-    S, I, R = model.run()
-    model.plot(S, I, R)
-
-if __name__ == "__main__":
-    main()
