@@ -21,7 +21,12 @@ os.getcwd();
 #Pop = target[['pop']].values.flatten()
 #County = target[['county']].values.flatten()
 #State = target[['state']].values.flatten()
-df = pd.read_csv("/Users/alannajohnsonstewart/Downloads/BIG-Hackathon-Tutorial-master/International_covid_cases_data.csv", index_col=0)
+
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/International/International_covid_cases_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/International/International_covid_deaths_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/LA/LA_cities_covid_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/US Counties/US_county_covid_cases_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/US Counties/US_county_covid_deaths_data.csv", index_col=0)
 
 from matplotlib.collections import LineCollection
 
