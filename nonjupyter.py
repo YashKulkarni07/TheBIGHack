@@ -16,19 +16,19 @@ import os
 from pathlib import Path
 Path.ls = lambda p: [i for i in p.iterdir()]
 
-os.getcwd();
 #target = pd.read_csv("/Users/alannajohnsonstewart/Downloads/BIG-Hackathon-Tutorial-master/International_covid_cases_data.csv")
 #Pop = target[['pop']].values.flatten()
 #County = target[['county']].values.flatten()
 #State = target[['state']].values.flatten()
-df = pd.read_csv("/Users/alannajohnsonstewart/Downloads/BIG-Hackathon-Tutorial-master/International_covid_cases_data.csv", index_col=0)
-
+df = pd.read_csv("./International_covid_cases_data.csv", index_col=0)
+print(df)
 from matplotlib.collections import LineCollection
 
 import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
+'''
 # The SIR model differential equations.
 def deriv(y, t, N, beta, gamma, a, mu):
     S, I, D, E, R = y
@@ -354,3 +354,4 @@ for loss in Loss:
 
 
 # metric.to_csv('SEIR_metric.csv')
+'''
