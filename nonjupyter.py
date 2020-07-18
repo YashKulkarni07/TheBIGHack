@@ -21,7 +21,7 @@ Path.ls = lambda p: [i for i in p.iterdir()]
 #County = target[['county']].values.flatten()
 #State = target[['state']].values.flatten()
 df = pd.read_csv("./International_covid_cases_data.csv", index_col=0)
-print(df)
+
 from matplotlib.collections import LineCollection
 
 import numpy as np
@@ -30,16 +30,6 @@ import matplotlib.pyplot as plt
 
 '''
 # The SIR model differential equations.
-def deriv(y, t, N, beta, gamma, a, mu):
-    S, I, D, E, R = y
-    dSdt = -beta * S * (I + E) / N #
-    dEdt = beta * (I + E) *S /N - a*E
-    # will change 0.05*gamma to another new paramter later
-    dIdt = mu*a*E - gamma*I - 0.025*gamma*I
-    dRdt = gamma * I
-    dDdt = 0.025*gamma*I
-
-    return dSdt, dIdt, dDdt, dEdt, dRdt,
 
 def SIR(beta,gamma,a,mu,nt,N,I0=1,R0=1,D0=0):
     """
