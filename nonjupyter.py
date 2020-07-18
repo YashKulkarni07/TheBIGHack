@@ -20,7 +20,12 @@ Path.ls = lambda p: [i for i in p.iterdir()]
 #Pop = target[['pop']].values.flatten()
 #County = target[['county']].values.flatten()
 #State = target[['state']].values.flatten()
-df = pd.read_csv("./International_covid_cases_data.csv", index_col=0)
+
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/International/International_covid_cases_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/International/International_covid_deaths_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/LA/LA_cities_covid_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/US Counties/US_county_covid_cases_data.csv", index_col=0)
+df = pd.read_csv("./Data-20200718T211646Z-001/Data/US Counties/US_county_covid_deaths_data.csv", index_col=0)
 
 from matplotlib.collections import LineCollection
 
@@ -344,4 +349,7 @@ for loss in Loss:
 
 
 # metric.to_csv('SEIR_metric.csv')
+<<<<<<< HEAD
 '''
+=======
+>>>>>>> 56d44cd9023bc418da73a83779f9bb42b007b956
