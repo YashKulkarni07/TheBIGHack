@@ -20,7 +20,6 @@ import os
 from pathlib import Path
 Path.ls = lambda p: [i for i in p.iterdir()]
 
-os.getcwd();
 #target = pd.read_csv("/Users/alannajohnsonstewart/Downloads/BIG-Hackathon-Tutorial-master/International_covid_cases_data.csv")
 #Pop = target[['pop']].values.flatten()
 #County = target[['county']].values.flatten()
@@ -38,17 +37,8 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
+'''
 # The SIR model differential equations.
-def deriv(y, t, N, beta, gamma, a, mu):
-    S, I, D, E, R = y
-    dSdt = -beta * S * (I + E) / N #
-    dEdt = beta * (I + E) *S /N - a*E
-    # will change 0.05*gamma to another new paramter later
-    dIdt = mu*a*E - gamma*I - 0.025*gamma*I
-    dRdt = gamma * I
-    dDdt = 0.025*gamma*I
-
-    return dSdt, dIdt, dDdt, dEdt, dRdt,
 
 def SIR(beta,gamma,a,mu,nt,N,I0=1,R0=1,D0=0):
     """
@@ -363,3 +353,4 @@ for loss in Loss:
 
 
 # metric.to_csv('SEIR_metric.csv')
+'''
