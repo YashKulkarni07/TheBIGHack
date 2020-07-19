@@ -3,7 +3,7 @@ import numpy as np
 from BetterSIRModel import SIRModel
 import re
 
-num_timepoints = 3600
+num_timepoints = 1600
 
 def main():
     test_model()
@@ -24,7 +24,7 @@ def test_model():
 
 def run_model(internation_populations,df,df1,arg):
     # A grid of time points (in days):
-    t = np.linspace(0, 160,160 )
+    t = np.linspace(0, num_timepoints,num_timepoints)
 
     all_countries_S = []
     all_countries_I = []
@@ -43,7 +43,7 @@ def run_model(internation_populations,df,df1,arg):
 
         country_infected_to_date = df.iloc[i][len(df.iloc[i]) -1 ]
         country_death_to_date = df1.iloc[i][len(df1.iloc[i]) - 1]
-        model = SIRModel(country_pop,country_infected_to_date,country_death_to_date,t)
+        model = SIRModel(country_pop,country_infected_to_date,country_death_to_date,t, 17218)
         S, I, R = model.run()
         all_countries_S.append(S)
         all_countries_I.append(I)
@@ -74,7 +74,7 @@ def model_international():
 def write_file(filename, data, country_names,loc_type):
     s_out = open(filename,'w')
     s_out.write(loc_type + ",")
-    for i in range(0,160):
+    for i in range(0,num_timepoints):
         s_out.write(str(i) + ",")
     s_out.write("\n")
     for a in range(0,len(data)):

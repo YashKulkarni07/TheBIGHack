@@ -20,19 +20,17 @@ class SIRModel:
        self.N = total_pop
        self.I0 = infected
        self.D0 = dead
-       self.R0 = recovered
+       self.R0 = recovered + dead
        self.timepoints = timepoints
 
        # Suspecible population = total_pop - infected - recovered
        self.S0 = self.N - self.I0 - self.R0
 
        # Set the infection rate and recovery rate
-
        self.beta = .2
-
        self.gamma = 1/10
 
-       # based off of : https://coronavirus.jhu.edu/data/mortality
+       # set the case fatality rate based off of : https://coronavirus.jhu.edu/data/mortality
        self.CFR = .038
 
 
@@ -46,20 +44,24 @@ class SIRModel:
     # The SIR model differential equations.
     def deriv(self,y, t, N, beta, gamma, delta,CFR):
         S, I, R, D = y
+
         dSdt = -beta * (I * S)/N + delta * R
         dIdt = beta * (I * S)/N - gamma * I
         dRdt = gamma * (1 - CFR) * I - (delta * R)
         dDdt = (gamma * CFR) * I
 
 
-        #dSdt = -beta * S * I / N
-        #dIdt = beta * S * I / N - gamma * I
-        #dRdt = gamma * I
         return dSdt, dIdt, dRdt, dDdt
 
+    def SIRderv(self,y, t, N, beta, gamma):
+        # Derivatives for the SIR model
+        dSdt = -beta * S * I / N
+        dIdt = beta * S * I / N - gamma * I
+        dRdt = gamma * I
+        return dSdt, dIdt, dRdt,
     def run(self):
         # Initial conditions vector
-        y0 = self.S0, self.I0, self.R0, self.D0
+        y0 = self.S0, self.I0, self.R0 , self.D0
         # Integrate the SIR equations over the time grid, t.
         ret = odeint(self.deriv, y0, self.timepoints, args=(self.N, self.beta, self.gamma, self.delta, self.CFR))
         S, I, R, D = ret.T
