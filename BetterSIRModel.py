@@ -14,6 +14,9 @@ class SIRModel:
        self.gamma = 1./10
        self.timepoints = timepoints
 
+    def setBetaGamma(beta, gamma):
+        self.beta = beta
+        self.gamma = gamma
     # The SIR model differential equations.
     def deriv(self,y, t, N, beta, gamma):
         S, I, R = y
