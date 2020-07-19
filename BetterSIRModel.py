@@ -3,20 +3,33 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
+# Adapted from: https://scipython.com/book/chapter-8-scipy/additional-examples/the-sir-epidemic-model/
 
 class SIRModel:
+    # __init__
+    # This function inits the SIRModel object
+    #
+    # preconditions
+    #   self - this object
+    #   total_pop - the total population
+    #   infected - the infected population
+    #   recoverd - the recovered population
+    #   timepoints - the timepoints that are needed
     def __init__(self, total_pop, infected, recovered, timepoints):
+       # Set the parameters that were passed in
        self.N = total_pop
        self.I0 = infected
        self.R0 = recovered
-       self.S0 = self.N - self.I0 - self.R0
-       self.beta = 0.2
-       self.gamma = 1./10
        self.timepoints = timepoints
 
-    def setBetaGamma(beta, gamma):
-        self.beta = beta
-        self.gamma = gamma
+       # Suspecible population = total_pop - infected - recovered
+       self.S0 = self.N - self.I0 - self.R0
+
+       # Set the infection rate and recovery rate
+       self.beta = infected/total_pop
+       self.gamma = recovered/total_pop
+
+
     # The SIR model differential equations.
     def deriv(self,y, t, N, beta, gamma):
         S, I, R = y
