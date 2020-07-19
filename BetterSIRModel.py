@@ -15,10 +15,11 @@ class SIRModel:
     #   infected - the infected population
     #   recoverd - the recovered population
     #   timepoints - the timepoints that are needed
-    def __init__(self, total_pop, infected, recovered, timepoints):
+    def __init__(self, total_pop, infected, dead, timepoints, recovered):
        # Set the parameters that were passed in
        self.N = total_pop
        self.I0 = infected
+       self.D0 = dead
        self.R0 = recovered
        self.timepoints = timepoints
 
@@ -26,25 +27,43 @@ class SIRModel:
        self.S0 = self.N - self.I0 - self.R0
 
        # Set the infection rate and recovery rate
-       self.beta = infected/total_pop
-       self.gamma = recovered/total_pop
+
+       self.beta = .2
+
+       self.gamma = 1/10
+
+       # based off of : https://coronavirus.jhu.edu/data/mortality
+       self.CFR = .038
+
+
+
+       # Delta = the number of people who can get reinfected.
+       #  Saying that the antibodies wear off after a 6 months or so
+       #  So far nobody knows if this is possible with only a few cases of reinfection: https://www.popsci.com/story/health/covid-19-reinfection-catch-twice/
+       self.delta = 1/180
 
 
     # The SIR model differential equations.
-    def deriv(self,y, t, N, beta, gamma):
-        S, I, R = y
-        dSdt = -beta * S * I / N
-        dIdt = beta * S * I / N - gamma * I
-        dRdt = gamma * I
-        return dSdt, dIdt, dRdt
+    def deriv(self,y, t, N, beta, gamma, delta,CFR):
+        S, I, R, D = y
+        dSdt = -beta * (I * S)/N + delta * R
+        dIdt = beta * (I * S)/N - gamma * I
+        dRdt = gamma * (1 - CFR) * I - (delta * R)
+        dDdt = (gamma * CFR) * I
+
+
+        #dSdt = -beta * S * I / N
+        #dIdt = beta * S * I / N - gamma * I
+        #dRdt = gamma * I
+        return dSdt, dIdt, dRdt, dDdt
 
     def run(self):
         # Initial conditions vector
-        y0 = self.S0, self.I0, self.R0
+        y0 = self.S0, self.I0, self.R0, self.D0
         # Integrate the SIR equations over the time grid, t.
-        ret = odeint(self.deriv, y0, self.timepoints, args=(self.N, self.beta, self.gamma))
-        S, I, R = ret.T
-        return S, I, R
+        ret = odeint(self.deriv, y0, self.timepoints, args=(self.N, self.beta, self.gamma, self.delta, self.CFR))
+        S, I, R, D = ret.T
+        return S, I, R, D
 
     def plot(self,S, I, R ):
         # Plot the data on three separate curves for S(t), I(t) and R(t)

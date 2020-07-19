@@ -2,8 +2,24 @@ import pandas as pd
 import numpy as np
 from BetterSIRModel import SIRModel
 import re
+
+num_timepoints = 3600
+
 def main():
-    model_county()
+    test_model()
+    #model_county()
+
+
+def test_model():
+    # Based off of Harris County in Houston
+    # Recovered number: https://abc13.com/harris-county-coronavirus-cases-covid-19-houston-deaths-in/6111478/
+    model = SIRModel(4713325,47369,466,np.linspace(0, num_timepoints,num_timepoints),17218)
+    S, I, R, D= model.run()
+    write_one_file("NewModelS.csv",S,"Harris County")
+    write_one_file("NewModelI.csv",I,"Harris County")
+    write_one_file("NewModelR.csv",R,"Harris County")
+    write_one_file("NewModelD.csv",D,"Harris County")
+
 
 
 def run_model(internation_populations,df,df1,arg):
@@ -54,6 +70,7 @@ def model_international():
     df1 = pd.read_csv("./Data-20200718T211646Z-001/Data/International/International_covid_deaths_data.csv")
     internation_populations = pd.read_csv("./Data-20200718T211646Z-001/Data/International/population_by_country_2020.csv")
     run_model(internation_populations,df,df1,"Country")
+
 def write_file(filename, data, country_names,loc_type):
     s_out = open(filename,'w')
     s_out.write(loc_type + ",")
@@ -66,6 +83,17 @@ def write_file(filename, data, country_names,loc_type):
             s_out.write(str(z) + ",")
         s_out.write("\n")
     s_out.close()
+
+def write_one_file(filename, data,name):
+    s_out = open(filename,'w')
+    s_out.write("Name,")
+    for i in range(0,num_timepoints):
+        s_out.write(str(i) + ",")
+    s_out.write("\n" + name + ",")
+
+    for z in data:
+        s_out.write(str(z) + ",")
+    s_out.write("\n")
 
 if __name__ == "__main__":
     main()
